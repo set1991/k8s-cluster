@@ -52,10 +52,10 @@ variable "ssh_user" {
 }
 variable "ssh_pub_key" {
   description = "name for project"
-  default = "~/.ssh/terraform_ed25519.pub"
+  default = "/home/set/keys/terraform_ed25519.pub"
 }
 
 variable "ssh_private_key" {
   description = "name for project"
-  default = "~/.ssh/terraform_ed25519"
+  default = "/home/set/keys/terraform_ed25519"
 }
