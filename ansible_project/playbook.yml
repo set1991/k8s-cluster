@@ -36,14 +36,13 @@
         state: latest
         update_cache: yes
 
-    #- name: Add Docker GPG apt Key
-    #  shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+    
     - name: Check that the Docker GPG key exists
       stat:
         path: /etc/apt/trusted.gpg.d/docker.gpg
       register: stat_result
     
-    - name: Add Docker GPG apt Key  if it doesn't exist
+    - name: Add Docker GPG apt Key when gpg key not exists
       shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmour  -o /etc/apt/trusted.gpg.d/docker.gpg
       when: not stat_result.stat.exists
       
@@ -71,15 +70,16 @@
         state: restarted
         enabled: yes
     
-    #- name: Get Kubernetes packege key
-    #  shell:  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    
+   
     - name: Check that the GPG key Kubernetes exists
       stat:
         path: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
       register: kube_result
 
-    - name: Get Kubernetes packege key  if it doesn't exist
-      shell:  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+    - name: Get Kubernetes packege key when key not exists
+      shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
       when: not kube_result.stat.exists
 
     - name: Add Kubernetes repository
@@ -166,7 +166,6 @@
      become: yes
      command: sh /tmp/kubernetes_join_command
      register: joined_or_not
-     ignore_errors: yes
 
 
 
