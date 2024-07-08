@@ -145,7 +145,7 @@
     - name: Get join command
       shell: kubeadm token create --print-join-command
       register: join_command
-      ignore_errors: yes
+      
 
     - name: Copy join command to local file.
       become: false
@@ -164,6 +164,7 @@
 
    - name: Join the Worker nodes to the cluster.
      become: yes
+     ignore_errors: yes
      command: sh /tmp/kubernetes_join_command
      register: joined_or_not
 
