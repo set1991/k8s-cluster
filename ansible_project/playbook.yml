@@ -37,7 +37,7 @@
         update_cache: yes
 
     - name: Add Docker GPG apt Key
-      shell: rm /etc/apt/trusted.gpg.d/docker.gpg && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
+      shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmour -o /etc/apt/trusted.gpg.d/docker.gpg
      
       
 
@@ -65,7 +65,7 @@
         enabled: yes
     
     - name: Get Kubernetes packege key
-      shell: rm /etc/apt/keyrings/kubernetes-apt-keyring.gpg && curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+      shell:  curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key |  gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
     
     - name: Add Kubernetes repository
       apt_repository:
