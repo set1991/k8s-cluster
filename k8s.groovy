@@ -36,7 +36,7 @@ pipeline {
                     //writeFile file: 'hosts', text: "[elasticsearch]\n" + ips.join("\n")
 
                     // start Ansible playbook
-                    cd ansible_project
+                    sh 'cd ansible_project'
                     sh 'ansible-playbook playbook.yml'
                 }
             }
