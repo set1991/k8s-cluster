@@ -131,7 +131,7 @@ EOT
 
 
 resource "local_file" "config_ansible" {
- filename = "./ansible_project/ansible.cfg"
+ filename = "./ansible.cfg"#"./ansible_project/ansible.cfg"
  content = <<EOF
 [defaults]
 remote_user = ${var.ssh_user}
@@ -142,7 +142,7 @@ EOF
 }
 
 resource "local_file" "inventory_run_ansible" {
- filename = "./ansible_project/hosts.ini"
+ filename = "./hosts.ini" #"./ansible_project/hosts.ini"
  content = <<EOF
 [master]
 ${google_compute_instance.kubernetes_master.name}   ansible_host=${google_compute_instance.kubernetes_master.network_interface.0.access_config.0.nat_ip}
