@@ -149,7 +149,7 @@ ${google_compute_instance.kubernetes_master.name}   ansible_host=${google_comput
 [workers]
 ${google_compute_instance.kubernetes_worker[0].name}   ansible_host=${google_compute_instance.kubernetes_worker[0].network_interface.0.access_config.0.nat_ip}
 EOF
-
+/*
 provisioner "remote-exec" {
     inline = ["echo 'login successful on master'"]
 
@@ -160,6 +160,7 @@ provisioner "remote-exec" {
       private_key = "${file(var.ssh_private_key)}"
     }
   }
+
 provisioner "remote-exec" {
     inline = ["echo 'login successful on worker'"]
 
@@ -177,7 +178,7 @@ provisioner "local-exec" {
     command     = "ansible-playbook playbook.yml"
     
 }
-
+*/
 }
 
 
