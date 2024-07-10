@@ -71,5 +71,6 @@ post {
     changed {
         echo 'Things were different before...'
     }
+    
 }      
 }
