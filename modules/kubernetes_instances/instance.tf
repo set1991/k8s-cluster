@@ -131,7 +131,7 @@ EOT
 
 
 resource "local_file" "config_ansible" {
- filename = "./ansible.cfg"#"./ansible_project/ansible.cfg"
+ filename = "./ansible_project/ansible.cfg"#"./ansible_project/ansible.cfg"
  content = <<EOF
 [defaults]
 remote_user = ${var.ssh_user}
@@ -142,43 +142,14 @@ EOF
 }
 
 resource "local_file" "inventory_run_ansible" {
- filename = "./hosts.ini" #"./ansible_project/hosts.ini"
+ filename = "./ansible_project/hosts.ini" #"./ansible_project/hosts.ini"
  content = <<EOF
 [master]
 ${google_compute_instance.kubernetes_master.name}   ansible_host=${google_compute_instance.kubernetes_master.network_interface.0.access_config.0.nat_ip}
 [workers]
 ${google_compute_instance.kubernetes_worker[0].name}   ansible_host=${google_compute_instance.kubernetes_worker[0].network_interface.0.access_config.0.nat_ip}
 EOF
-/*
-provisioner "remote-exec" {
-    inline = ["echo 'login successful on master'"]
 
-    connection {
-      host = google_compute_instance.kubernetes_master.network_interface.0.access_config.0.nat_ip
-      type = "ssh"
-      user = "${var.ssh_user}"
-      private_key = "${file(var.ssh_private_key)}"
-    }
-  }
-
-provisioner "remote-exec" {
-    inline = ["echo 'login successful on worker'"]
-
-    connection {
-      host = google_compute_instance.kubernetes_worker[0].network_interface.0.access_config.0.nat_ip
-      type = "ssh"
-      user = "${var.ssh_user}"
-      private_key = "${file(var.ssh_private_key)}"
-    }
-  }
-provisioner "local-exec" {
-
-
-    working_dir = "./ansible_project/"
-    command     = "ansible-playbook playbook.yml"
-    
-}
-*/
 }
 
 

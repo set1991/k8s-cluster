@@ -21,9 +21,11 @@ pipeline {
             agent { label 'master' }
             steps {
                 echo 'Building infrastructure'
-                sh "terraform init " 
-                sh "terraform plan"
-                sh "terraform apply -auto-approve"
+                sh '''
+                cd terraform
+                terraform init
+                terraform apply -auto-approve
+                '''
             }
         }
         stage('Ansible Run') {
@@ -63,7 +65,7 @@ pipeline {
 
 post {
     always {
-        
+        echo 'Pipeline finished'
     }
     success {
         echo 'I succeeded!'
