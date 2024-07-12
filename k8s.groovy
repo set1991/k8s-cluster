@@ -38,7 +38,18 @@ pipeline {
             }
         }
 
-
+        stage('Test prometheus and grafana') {
+            steps {
+                script {
+                    def grafana = sh(script: "gcloud compute instances describe k8s-grafana --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
+                    echo "ip_grafana: ${grafana}"
+                    sh "curl -XGET 'http://${grafana}:3000'"
+                    def prometheus = sh(script: "gcloud compute instances describe k8s-prometheus --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
+                    echo "ip prometheus: ${prometheus}"
+                    sh "curl -XGET 'http://${prometheus}:9090'"
+                }
+            }
+        }
         // stage ('destroy IaC') {
         //     agent { label 'master' }
         //     steps {
@@ -51,18 +62,7 @@ pipeline {
 
 post {
     always {
-        stage('Test prometheus and grafana') {
-            steps {
-                script {
-                    def grafana = sh(script: "gcloud compute instances describe k8s-grafana --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
-                    echo "ip_grafana: ${grafana}"
-                    sh "curl -XGET 'http://${grafana}:3000'"
-                    def prometheus = sh(script: "gcloud compute instances describe k8s-prometheus --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
-                    echo "ip prometheus: ${prometheus}"
-                    sh "curl -XGET 'http://${grafana}:9090'"
-                }
-            }
-        }
+        
     }
     success {
         echo 'I succeeded!'
