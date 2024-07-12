@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Building infrastructure'
                 sh '''
-                cd terraform
+                
                 terraform init
                 terraform apply -auto-approve
                 '''
@@ -32,10 +32,10 @@ pipeline {
             agent { label 'master' }
             steps {
                 
-                    sh 'pwd'
-                    sh 'ls -la '
-                    
-                    sh 'ansible-playbook ./ansible_project/playbook.yml'
+                sh '''
+                cd ansible_project
+                ansible-playbook -i inventory playbook.yml
+                '''
                 
             }
         }
