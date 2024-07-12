@@ -29,21 +29,12 @@ pipeline {
         stage('Ansible Run') {
             agent { label 'master' }
             steps {
-                //script {
-                    // get EC2 IPs
-                    //def ips = sh(script: "aws ec2 describe-instances --filters 'Name=instance.group-name,Values=es_sg' --query 'Reservations[*].Instances[*].PublicIpAddress' --output text", returnStdout: true).trim().split()
-                    
-                    // create Ansible inventory file
-                    //writeFile file: 'hosts', text: "[elasticsearch]\n" + ips.join("\n")
-
-                    // start Ansible playbook
-                   
-                    //sh 'cd ansible_project'
+                
                     sh 'pwd'
                     sh 'ls -la '
                     
                     sh 'ansible-playbook ./ansible_project/playbook.yml'
-                //}
+                
             }
         }
 
@@ -60,7 +51,18 @@ pipeline {
 
 post {
     always {
-        echo 'One way or another, I have finished'
+        stage('Test prometheus and grafana') {
+            steps {
+                script {
+                    def grafana = sh(script: "gcloud compute instances describe k8s-grafana --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
+                    echo "ip_grafana: ${grafana}"
+                    sh "curl -XGET 'http://${grafana}:3000'"
+                    def prometheus = sh(script: "gcloud compute instances describe k8s-prometheus --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
+                    echo "ip prometheus: ${prometheus}"
+                    sh "curl -XGET 'http://${grafana}:9090'"
+                }
+            }
+        }
     }
     success {
         echo 'I succeeded!'
