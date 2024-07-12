@@ -39,6 +39,7 @@ pipeline {
         }
 
         stage('Test prometheus and grafana') {
+            agent {label 'master'}
             steps {
                 script {
                     def grafana = sh(script: "gcloud compute instances describe k8s-grafana --zone=europe-west2-a --format='get(networkInterfaces[0].accessConfigs[0].natIP)'", returnStdout: true).trim()
