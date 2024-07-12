@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo 'Building infrastructure'
                 sh '''
-                cd terraform
+            
                 terraform init
                 terraform apply -auto-approve
                 '''
