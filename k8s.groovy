@@ -34,7 +34,7 @@ pipeline {
                 
                 sh '''
                 cd ansible_project
-                ansible-playbook -i inventory playbook.yml
+                ansible-playbook  playbook.yml
                 '''
                 
             }
