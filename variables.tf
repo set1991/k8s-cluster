@@ -4,7 +4,8 @@ variable "gcp_srv_key" {
 
 variable "gcp_project" {
   description = "Project id from GSP"
-  default = "prod-421408"
+  #default = "prod-421408"
+  default = "prod-429618"
 }
 
 variable "gcp_region" {
@@ -48,7 +49,8 @@ variable "tags_firewall" {
 
 variable "ssh_user" {
   description = "name for project"
-  default = "set_gomel"
+  #default = "set_gomel"
+  default = "sasha_aliferenko91"
 }
 variable "ssh_pub_key" {
   description = "name for project"
