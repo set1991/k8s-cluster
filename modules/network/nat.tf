@@ -1,6 +1,6 @@
 
 #CREATE NAT FOR TWO PRIVATE SUBNETS
-
+/*
 resource "google_compute_router_nat" "nat" {
   name                               = "${var.name}-nat"
   router                             = google_compute_router.router.name
@@ -13,3 +13,4 @@ resource "google_compute_router_nat" "nat" {
     filter = "ERRORS_ONLY"
   }
 }
+*/
