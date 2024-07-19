@@ -69,6 +69,18 @@
         name: containerd
         state: restarted
         enabled: yes
+
+    - name: Update apt and install docker
+      apt:
+        name: docker-ce
+        state: latest
+        update_cache: true
+        
+    - name: adding existing user '{{ user }}' to group docker
+      user:
+        name: '{{ user }}'
+        groups: docker
+        append: yes
     
     
    
