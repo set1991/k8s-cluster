@@ -76,11 +76,11 @@
         state: latest
         update_cache: true
         
-    - name: adding existing user '{{ user }}' to group docker
-      user:
-        name: '{{ user }}'
-        groups: docker
-        append: yes
+    # - name: adding existing user '{{ user }}' to group docker
+    #   user:
+    #     name: '{{ user }}'
+    #     groups: docker
+    #     append: yes
     
     
    
